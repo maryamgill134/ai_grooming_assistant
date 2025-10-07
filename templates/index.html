@@ -1,0 +1,542 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Beauty Assistant | Personalized Beauty Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary: #ff6b6b;
+      --secondary: #794afa;
+      --dark: #2b2d42;
+      --light: #f8f9fa;
+      --success: #40c057;
+      --warning: #fcc419;
+      --gradient: linear-gradient(135deg, #ff6b6b 0%, #794afa 100%);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7ff;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: var(--gradient);
+    
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .subtitle {
+      color: #666;
+      font-weight: 300;
+      font-size: 1.2rem;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .card-title {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .card-title i {
+      font-size: 1.3rem;
+    }
+    
+    .media-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .media-box {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    video, canvas, img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    
+    video:hover, canvas:hover, img:hover {
+      transform: translateY(-5px);
+    }
+    
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-primary {
+      background: var(--gradient);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(121, 74, 250, 0.4);
+    }
+    
+    .btn-secondary {
+      background: white;
+      color: var(--secondary);
+      border: 2px solid var(--secondary);
+    }
+    
+    .btn-secondary:hover {
+      background: var(--secondary);
+      color: white;
+    }
+    
+    .btn-warning {
+      background: var(--warning);
+      color: var(--dark);
+    }
+    
+    .btn-warning:hover {
+      background: #e6b800;
+    }
+    
+    #previewSection {
+      margin-top: 1.5rem;
+      display: none;
+    }
+    
+    #uploadForm {
+      margin-top: 2rem;
+    }
+    
+    .file-input {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+    
+    .file-input input {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      cursor: pointer;
+    }
+    
+    .file-input label {
+      display: block;
+      padding: 1.5rem;
+      border: 2px dashed #ccc;
+      border-radius: 10px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .file-input label:hover {
+      border-color: var(--secondary);
+      background: rgba(121, 74, 250, 0.05);
+    }
+    
+    .file-input i {
+      font-size: 2rem;
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+    }
+    
+    #results {
+      margin-top: 2rem;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    
+    .result-card {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .result-card h4 {
+      color: var(--secondary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .result-card ul {
+      list-style-type: none;
+    }
+    
+    .result-card li {
+      margin-bottom: 0.8rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    
+    .result-card li:before {
+      content: "•";
+      color: var(--primary);
+      font-size: 1.5rem;
+      position: absolute;
+      left: 0;
+      top: -0.3rem;
+    }
+    
+    .attribute {
+      font-weight: 600;
+      color: var(--dark);
+    }
+    
+    .value {
+      color: #555;
+    }
+    
+    .suggestion {
+      background: rgba(121, 74, 250, 0.1);
+      padding: 0.8rem;
+      border-radius: 8px;
+      margin-bottom: 0.8rem;
+      border-left: 4px solid var(--secondary);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .media-container {
+        flex-direction: column;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>AI Beauty Assistant</h1>
+      <p class="subtitle">Get personalized beauty analysis and grooming suggestions powered by AI</p>
+    </header>
+    
+    <div class="card">
+      <h2 class="card-title"><i class="fas fa-camera"></i> Upload or Capture Image</h2>
+      
+      <div class="media-container">
+        <div class="media-box">
+          <video id="video" autoplay></video>
+          <div class="btn-group">
+            <button id="capture" class="btn btn-primary">
+              <i class="fas fa-camera"></i> Capture
+            </button>
+            <button id="retake" class="btn btn-secondary" style="display: none;">
+              <i class="fas fa-redo"></i> Retake
+            </button>
+          </div>
+        </div>
+        
+        <div class="media-box" id="previewSection" style="display: none;">
+          <h4><i class="fas fa-image"></i> Captured Preview</h4>
+          <img id="previewImage" />
+        </div>
+      </div>
+      
+      <div class="file-input">
+        <input type="file" name="image" id="imageInput" accept="image/*">
+        <label for="imageInput">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <h4>Or Upload an Image</h4>
+          <p>Drag & drop or click to browse</p>
+        </label>
+      </div>
+      
+      <form id="uploadForm" enctype="multipart/form-data">
+        <input type="hidden" name="captured" id="capturedImage">
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+          <i class="fas fa-magic"></i> Analyze My Beauty Profile
+        </button>
+      </form>
+    </div>
+    
+    <div id="results"></div>
+    
+    <canvas id="canvas" style="display:none;"></canvas>
+  </div>
+  
+  <footer>
+    <p>© 2023 AI Beauty Assistant | Powered by Advanced Computer Vision</p>
+  </footer>
+
+  <script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const captureBtn = document.getElementById('capture');
+    const retakeBtn = document.getElementById('retake');
+    const capturedImageInput = document.getElementById('capturedImage');
+    const imageInput = document.getElementById('imageInput');
+    const previewSection = document.getElementById('previewSection');
+    const previewImage = document.getElementById('previewImage');
+    const uploadForm = document.getElementById('uploadForm');
+    const resultsDiv = document.getElementById('results');
+
+    // Set canvas dimensions
+    canvas.width = 640;
+    canvas.height = 480;
+
+    // Start webcam
+    navigator.mediaDevices.getUserMedia({ 
+      video: { 
+        width: { ideal: 1280 },
+        height: { ideal: 720 },
+        facingMode: 'user' 
+      } 
+    })
+    .then(stream => {
+      video.srcObject = stream;
+      video.onloadedmetadata = () => {
+        video.play();
+      };
+    })
+    .catch(err => {
+      console.error("Webcam not accessible", err);
+      resultsDiv.innerHTML = `
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-exclamation-triangle"></i> Webcam Error</h2>
+          <p>Could not access your webcam. Please ensure you've granted camera permissions and try again.</p>
+          <p>Alternatively, you can upload an image using the file upload option.</p>
+        </div>
+      `;
+    });
+
+    // Capture webcam photo
+    captureBtn.onclick = () => {
+      const context = canvas.getContext('2d');
+      // Set canvas dimensions to match video aspect ratio
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      
+      // Convert to JPEG with quality 0.8
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+      capturedImageInput.value = dataUrl;
+
+      previewImage.src = dataUrl;
+      previewSection.style.display = "block";
+      video.style.display = "none";
+      retakeBtn.style.display = "inline-block";
+      imageInput.value = "";
+    };
+
+    // Retake photo
+    retakeBtn.onclick = () => {
+      capturedImageInput.value = "";
+      previewSection.style.display = "none";
+      video.style.display = "block";
+      retakeBtn.style.display = "none";
+    };
+
+    // Handle file selection
+    imageInput.addEventListener('change', function() {
+      if (this.files && this.files[0]) {
+        capturedImageInput.value = "";
+        previewImage.src = URL.createObjectURL(this.files[0]);
+        previewSection.style.display = "block";
+        video.style.display = "none";
+        retakeBtn.style.display = "inline-block";
+      }
+    });
+
+    // Submit handler
+    uploadForm.onsubmit = async function (e) {
+      e.preventDefault();
+      const formData = new FormData();
+      let hasImage = false;
+
+      // Show loading state
+      const submitBtn = uploadForm.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+      submitBtn.disabled = true;
+
+      if (capturedImageInput.value) {
+        const blob = await (await fetch(capturedImageInput.value)).blob();
+        formData.append("image", blob, "webcam_capture.jpg");
+        hasImage = true;
+      } else if (imageInput.files.length > 0) {
+        formData.append("image", imageInput.files[0]);
+        hasImage = true;
+      }
+
+      if (!hasImage) {
+        alert("Please select or capture an image.");
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+        return;
+      }
+
+      try {
+        const response = await fetch('/predict', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        
+        resultsDiv.innerHTML = `
+          <div class="card">
+            <h2 class="card-title"><i class="fas fa-chart-line"></i> Your Beauty Analysis</h2>
+            <p>Here's your personalized beauty profile and recommendations:</p>
+            
+            <div class="results-grid">
+              <div class="result-card">
+                <h4><i class="fas fa-user"></i> Attributes</h4>
+                <ul>
+                  <li><span class="attribute">Face Shape:</span> <span class="value">${data.attributes.face_shape}</span></li>
+                  <li><span class="attribute">Gender:</span> <span class="value">${data.attributes.gender}</span></li>
+                  <li><span class="attribute">Hair Type:</span> <span class="value">${data.attributes.hair_type}</span></li>
+                  <li><span class="attribute">Skin Type:</span> <span class="value">${data.attributes.skin_type}</span></li>
+                </ul>
+              </div>
+              
+              <div class="result-card">
+                <h4><i class="fas fa-lightbulb"></i> Recommendations</h4>
+                <div class="suggestion">${data.suggestions.face_shape}</div>
+                <div class="suggestion">${data.suggestions.gender}</div>
+                <div class="suggestion">${data.suggestions.hair_type}</div>
+                <div class="suggestion">${data.suggestions.skin_type}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      } catch (error) {
+        console.error('Error:', error);
+        resultsDiv.innerHTML = `
+          <div class="card">
+            <h2 class="card-title"><i class="fas fa-exclamation-triangle"></i> Error</h2>
+            <p>There was an error processing your image. Please try again.</p>
+            <p>${error.message}</p>
+          </div>
+        `;
+      } finally {
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+      }
+    };
+
+    // Drag and drop functionality
+    const fileInputLabel = document.querySelector('.file-input label');
+    
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      fileInputLabel.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      fileInputLabel.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      fileInputLabel.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight() {
+      fileInputLabel.style.borderColor = 'var(--secondary)';
+      fileInputLabel.style.backgroundColor = 'rgba(121, 74, 250, 0.1)';
+    }
+
+    function unhighlight() {
+      fileInputLabel.style.borderColor = '#ccc';
+      fileInputLabel.style.backgroundColor = '';
+    }
+
+    fileInputLabel.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      
+      if (files.length) {
+        imageInput.files = files;
+        const event = new Event('change');
+        imageInput.dispatchEvent(event);
+      }
+    }
+  </script>
+</body>
+</html>
