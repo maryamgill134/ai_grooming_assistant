@@ -29,7 +29,7 @@ This project combines **Computer Vision, Deep Learning, and Web Development** in
 The system predicts:
 
 - Face Shape (Oval, Round, Square, Heart, etc.)
-- Gender
+- Gender (Male,Female)
 - Hair Type (Straight, Wavy, Curly, Coily)
 - Skin Type (Dry, Oily, Normal, Combination)
 
