@@ -5,6 +5,7 @@ from detectors.skin_type_model import SkinTypeDetector
 import os
 import traceback
 import cv2
+import tempfile
 
 # Initialize detectors with error handling
 face_shape_detector = None
@@ -61,11 +62,11 @@ def initialize_models():
 # Load models on startup
 initialize_models()
 
-def image_has_face(image_path):
-    """Return whether the uploaded image contains a detectable face."""
+def find_largest_face(image_path):
+    """Return the largest detected face as an (x, y, width, height) tuple."""
     image = cv2.imread(image_path)
     if image is None:
-        return False
+        return None
 
     grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     cascade = cv2.CascadeClassifier(
@@ -77,7 +78,31 @@ def image_has_face(image_path):
         minNeighbors=5,
         minSize=(60, 60),
     )
-    return len(faces) > 0
+    if len(faces) == 0:
+        return None
+    return max(faces, key=lambda face: face[2] * face[3])
+
+def image_has_face(image_path):
+    """Return whether the uploaded image contains a detectable face."""
+    return find_largest_face(image_path) is not None
+
+def create_face_crop(image_path, face):
+    """Create a temporary padded face crop for face-specific classifiers."""
+    image = cv2.imread(image_path)
+    image_height, image_width = image.shape[:2]
+    x, y, width, height = face
+    padding_x = int(width * 0.35)
+    padding_top = int(height * 0.45)
+    padding_bottom = int(height * 0.2)
+    left = max(0, x - padding_x)
+    top = max(0, y - padding_top)
+    right = min(image_width, x + width + padding_x)
+    bottom = min(image_height, y + height + padding_bottom)
+
+    temporary_file = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
+    temporary_file.close()
+    cv2.imwrite(temporary_file.name, image[top:bottom, left:right])
+    return temporary_file.name
 
 def predict_attributes(image_path):
     """Predict all attributes for an image"""
@@ -85,17 +110,20 @@ def predict_attributes(image_path):
         if not os.path.exists(image_path):
             raise FileNotFoundError(f"Image not found: {image_path}")
 
-        if not image_has_face(image_path):
+        face = find_largest_face(image_path)
+        if face is None:
             raise ValueError(
                 "No face detected. Please upload a clear, front-facing face photo."
             )
+
+        face_crop_path = create_face_crop(image_path, face)
         
         attributes = {}
         
         # Detect Face Shape
         if face_shape_detector:
             try:
-                face_shape, confidence = face_shape_detector.detect_face_shape(image_path)
+                face_shape, confidence = face_shape_detector.detect_face_shape(face_crop_path)
                 attributes["face_shape"] = face_shape
                 attributes["face_shape_confidence"] = round(confidence, 3)
             except Exception as e:
@@ -106,7 +134,7 @@ def predict_attributes(image_path):
         # Detect Gender
         if gender_detector:
             try:
-                gender, confidence = gender_detector.detect_gender(image_path)
+                gender, confidence = gender_detector.detect_gender(face_crop_path)
                 attributes["gender"] = gender if gender else "Unknown"
                 attributes["gender_confidence"] = round(confidence, 3) if confidence else 0.0
             except Exception as e:
@@ -128,7 +156,7 @@ def predict_attributes(image_path):
         # Detect Skin Type
         if skin_type_detector:
             try:
-                skin_type, confidence = skin_type_detector.detect_skin_type(image_path)
+                skin_type, confidence = skin_type_detector.detect_skin_type(face_crop_path)
                 attributes["skin_type"] = skin_type
                 attributes["skin_type_confidence"] = round(confidence, 3)
             except Exception as e:
@@ -147,3 +175,6 @@ def predict_attributes(image_path):
         print(f"Error in predict_attributes: {e}")
         traceback.print_exc()
         return None
+    finally:
+        if "face_crop_path" in locals() and os.path.exists(face_crop_path):
+            os.unlink(face_crop_path)
