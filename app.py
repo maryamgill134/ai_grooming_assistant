@@ -83,6 +83,8 @@ def predict():
 
         return jsonify(response)
 
+    except ValueError as e:
+        return jsonify({'error': str(e), 'success': False}), 400
     except Exception as e:
         print(f"Error in predict: {e}")
         print(traceback.format_exc())

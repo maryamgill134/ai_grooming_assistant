@@ -4,6 +4,7 @@ from detectors.hair_style_model import HairStyleDetector
 from detectors.skin_type_model import SkinTypeDetector
 import os
 import traceback
+import cv2
 
 # Initialize detectors with error handling
 face_shape_detector = None
@@ -60,11 +61,34 @@ def initialize_models():
 # Load models on startup
 initialize_models()
 
+def image_has_face(image_path):
+    """Return whether the uploaded image contains a detectable face."""
+    image = cv2.imread(image_path)
+    if image is None:
+        return False
+
+    grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    cascade = cv2.CascadeClassifier(
+        cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+    )
+    faces = cascade.detectMultiScale(
+        grayscale,
+        scaleFactor=1.1,
+        minNeighbors=5,
+        minSize=(60, 60),
+    )
+    return len(faces) > 0
+
 def predict_attributes(image_path):
     """Predict all attributes for an image"""
     try:
         if not os.path.exists(image_path):
             raise FileNotFoundError(f"Image not found: {image_path}")
+
+        if not image_has_face(image_path):
+            raise ValueError(
+                "No face detected. Please upload a clear, front-facing face photo."
+            )
         
         attributes = {}
         
@@ -117,6 +141,8 @@ def predict_attributes(image_path):
         
         return attributes
 
+    except ValueError:
+        raise
     except Exception as e:
         print(f"Error in predict_attributes: {e}")
         traceback.print_exc()
