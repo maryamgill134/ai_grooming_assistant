@@ -1,0 +1,44 @@
+{
+  "face_shape": {
+    "oval_male": "Try short sides with volume on top.",
+    "oval_female": "Try long layers or waves.",
+    "round_male": "Add height with a faux hawk or pompadour.",
+    "round_female": "Avoid chin-length cuts and go for volume at the crown.",
+    "square_male": "Go for undercuts and fades to soften jawline.",
+    "square_female": "Soften strong jawlines with curls or waves.",
+    "heart_male": "Side-parted styles work well.",
+    "heart_female": "Go for side-swept bangs and chin-length bobs.",
+    "diamond_male": "Messy fringe helps balance cheekbones.",
+    "diamond_female": "Try layered styles to soften cheekbones.",
+    "oblong_male": "Avoid too much height on top.",
+    "oblong_female": "Use bangs or curls to reduce length appearance."
+  },
+  "hair_type": {
+    "straight_male": "Use matte styling paste for texture.",
+    "straight_female": "Use volumizing products to add body and lift.",
+    "wavy_male": "Use light mousse to define waves.",
+    "wavy_female": "Enhance natural waves with mousse or sea salt spray.",
+    "curly_male": "Use curl cream to define and control.",
+    "curly_female": "Use anti-frizz serum and wide-tooth combs.",
+    "coily_male": "Moisturize with leave-in conditioner.",
+    "coily_female": "Deep condition weekly and use hydrating masks."
+  },
+  "skin_type": {
+    "oily_male": "Use gel-based cleansers and blotting paper.",
+    "oily_female": "Use oil-free moisturizers and clay masks weekly.",
+    "dry_male": "Use heavy-duty moisturizers after shower.",
+    "dry_female": "Apply rich hydrating cream daily and avoid hot water washes.",
+    "normal_male": "Use balanced skincare routine with SPF.",
+    "normal_female": "Maintain balance with a gentle cleanser and light moisturizer.",
+    "sensitive_male": "Use hypoallergenic shaving creams.",
+    "sensitive_female": "Use fragrance-free products and test before applying.",
+    "acne-prone_male": "Use salicylic acid face wash and avoid greasy food.",
+    "acne-prone_female": "Use salicylic acid-based cleansers and avoid heavy oils.",
+    "combination_male": "Use toner to control T-zone oil.",
+    "combination_female": "Moisturize dry areas and mattify oily zones with gels."
+  },
+  "gender": {
+    "male": "Trim beard regularly and apply sunscreen daily.",
+    "female": "Try light makeup to highlight features and use SPF-based moisturizers."
+  }
+}
