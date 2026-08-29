@@ -1,44 +1,48 @@
 {
   "face_shape": {
-    "oval_male": "Try short sides with volume on top.",
-    "oval_female": "Try long layers or waves.",
-    "round_male": "Add height with a faux hawk or pompadour.",
-    "round_female": "Avoid chin-length cuts and go for volume at the crown.",
-    "square_male": "Go for undercuts and fades to soften jawline.",
-    "square_female": "Soften strong jawlines with curls or waves.",
-    "heart_male": "Side-parted styles work well.",
-    "heart_female": "Go for side-swept bangs and chin-length bobs.",
-    "diamond_male": "Messy fringe helps balance cheekbones.",
-    "diamond_female": "Try layered styles to soften cheekbones.",
-    "oblong_male": "Avoid too much height on top.",
-    "oblong_female": "Use bangs or curls to reduce length appearance."
+    "oval_male": "Most styles suit an oval face. Try a tidy taper, textured crop, or side part.",
+    "oval_female": "Most styles suit an oval face. Try long layers, soft waves, or a clean bob.",
+    "round_male": "Add visual height with a textured quiff, pompadour, or shorter sides.",
+    "round_female": "Create length with layers below the chin, a side part, or loose waves.",
+    "square_male": "Balance a defined jaw with a textured crop, side part, or softly tapered sides.",
+    "square_female": "Soften angular lines with face-framing layers, waves, or a side-swept fringe.",
+    "heart_male": "Balance a wider forehead with a side-swept fringe, textured crop, or medium-length layers.",
+    "heart_female": "Balance the forehead with side-swept bangs, chin-length layers, or a soft bob.",
+    "oblong_male": "Keep some fullness at the sides and avoid excessive height on top.",
+    "oblong_female": "Add width with cheekbone-length layers, waves, or a light fringe.",
+    "square": "Balance strong angles with texture and softly rounded lines around the face.",
+    "heart": "Use soft layers or a side part to balance the forehead and chin.",
+    "oblong": "Add width at the sides and avoid too much height at the crown.",
+    "oval": "An oval face suits many styles; choose the cut that matches your hair texture."
   },
   "hair_type": {
-    "straight_male": "Use matte styling paste for texture.",
-    "straight_female": "Use volumizing products to add body and lift.",
-    "wavy_male": "Use light mousse to define waves.",
-    "wavy_female": "Enhance natural waves with mousse or sea salt spray.",
-    "curly_male": "Use curl cream to define and control.",
-    "curly_female": "Use anti-frizz serum and wide-tooth combs.",
-    "coily_male": "Moisturize with leave-in conditioner.",
-    "coily_female": "Deep condition weekly and use hydrating masks."
+    "straight_male": "Add texture with a lightweight matte paste and avoid heavy products at the roots.",
+    "straight_female": "Use a light volumizing mousse at the roots and heat protectant before styling.",
+    "wavy_male": "Enhance natural waves with lightweight mousse and air-dry or diffuse on low heat.",
+    "wavy_female": "Use leave-in conditioner and mousse to define waves without making them crunchy.",
+    "curly_male": "Apply curl cream to damp hair, detangle with fingers, and avoid brushing it dry.",
+    "curly_female": "Use a wide-tooth comb on damp hair, curl cream, and gentle drying to reduce frizz.",
+    "dreadlocks_male": "Keep the scalp clean, dry roots thoroughly, and use light products to avoid buildup.",
+    "dreadlocks_female": "Protect locs at night with a satin covering and keep the scalp gently cleansed.",
+    "kinky_male": "Moisturize regularly with leave-in conditioner and detangle gently in small sections.",
+    "kinky_female": "Use rich conditioning treatments and low-tension styles to help retain moisture."
   },
   "skin_type": {
-    "oily_male": "Use gel-based cleansers and blotting paper.",
-    "oily_female": "Use oil-free moisturizers and clay masks weekly.",
-    "dry_male": "Use heavy-duty moisturizers after shower.",
-    "dry_female": "Apply rich hydrating cream daily and avoid hot water washes.",
-    "normal_male": "Use balanced skincare routine with SPF.",
-    "normal_female": "Maintain balance with a gentle cleanser and light moisturizer.",
-    "sensitive_male": "Use hypoallergenic shaving creams.",
-    "sensitive_female": "Use fragrance-free products and test before applying.",
-    "acne-prone_male": "Use salicylic acid face wash and avoid greasy food.",
-    "acne-prone_female": "Use salicylic acid-based cleansers and avoid heavy oils.",
-    "combination_male": "Use toner to control T-zone oil.",
-    "combination_female": "Moisturize dry areas and mattify oily zones with gels."
+    "oily_male": "Use a gentle foaming cleanser, lightweight moisturizer, and broad-spectrum SPF 30 or higher.",
+    "oily_female": "Choose non-comedogenic products, a lightweight moisturizer, and broad-spectrum SPF 30 or higher.",
+    "dry_male": "Use a gentle cleanser, fragrance-free cream moisturizer, and lukewarm water after washing.",
+    "dry_female": "Apply a fragrance-free cream moisturizer to damp skin and avoid very hot water.",
+    "normal_male": "Keep a simple routine: gentle cleanser, moisturizer, and broad-spectrum SPF 30 or higher.",
+    "normal_female": "Maintain a simple routine with gentle cleansing, moisturizer, and daily broad-spectrum SPF.",
+    "sensitive_male": "Choose fragrance-free products, patch-test new products, and use a gentle shaving cream.",
+    "sensitive_female": "Choose fragrance-free products, patch-test first, and introduce one new product at a time.",
+    "oily": "Use a gentle cleanser, lightweight moisturizer, and non-comedogenic SPF 30 or higher.",
+    "dry": "Use a gentle cleanser and fragrance-free moisturizer, especially while skin is still damp.",
+    "normal": "Keep it simple with gentle cleansing, moisturizer, and daily broad-spectrum SPF."
   },
   "gender": {
-    "male": "Trim beard regularly and apply sunscreen daily.",
-    "female": "Try light makeup to highlight features and use SPF-based moisturizers."
+    "male": "Choose a grooming routine that fits your style: keep facial hair neat if you wear it and use daily SPF.",
+    "female": "Choose products that suit your skin and style, remove makeup gently, and use daily SPF.",
+    "unknown": "Choose products based on your skin and hair needs, and use broad-spectrum SPF daily."
   }
 }
